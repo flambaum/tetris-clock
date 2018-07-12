@@ -1,6 +1,6 @@
 @font-face {
 	font-family: Alsina;
-	src: url(../fonts/Alsina.ttf) format('truetype');
+	src: url(/tetris-clock/fonts/Alsina.TTF) format('truetype');
 }
 
 body {
