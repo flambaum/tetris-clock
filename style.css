@@ -1,11 +1,22 @@
+@font-face {
+	font-family: Alsina;
+	src:url(fonts/Alsina.ttf);
+}
+
 body {
+	font-family: Alsina;
 	margin: 0;
+}
+
+h1 {
+	font-size: 45px;
+	margin-top: 15vh;
 }
 
 .section {
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
 }
 
