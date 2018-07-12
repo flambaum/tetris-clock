@@ -69,8 +69,8 @@ function clock() {
 		oSecX = 16, // смещение секундных точек.
 		oSecY = oNumY + 2,
 		gr = 11, // grid, размер сетки, одной точки.
-		speed = 75; // Задержка между кадрами в анимации, мс.
-		isSeconds = false; // Отрисованы ли секндные точки.
+		speed = 75, // Задержка между кадрами в анимации, мс.
+		isSeconds = false, // Отрисованы ли секндные точки.
 		borderColor = "#758374",
 		bgColor = "#b5c3b4",
 		pixelColor = "#010101";
@@ -81,11 +81,11 @@ function clock() {
 	let time = new Date,
 		hours = time.getHours(),
 		minutes = time.getMinutes();
-	animateNumber(Math.trunc(hours/10), ox, oy);
-	animateNumber(hours%10, ox+8, oy);
-	animateNumber(Math.trunc(minutes/10), ox+20, oy);
-	animateNumber(minutes%10, ox+28, oy);
-
+	let animate1 = animateNumber(Math.trunc(hours/10), ox, oy),
+	animate2 = animateNumber(hours%10, ox+8, oy),
+	animate3 = animateNumber(Math.trunc(minutes/10), ox+20, oy),
+	animate4 = animateNumber(minutes%10, ox+28, oy);
+	
 	// Запускаем основной цикл работы часов.
 	let mainInterval = setInterval(animateClock, 500);
 
@@ -100,16 +100,30 @@ function clock() {
 		if (minutes != newM) {
 			if (newM == 0) {
 				if (Math.trunc(hours/10) != Math.trunc(newH/10)) {
+					if (animate1) {
+						clearInterval(animate1);
+						animate1 = null;
+					};
 					animateNumber(Math.trunc(newH/10), ox, oy);
 				};
-
+				if (animate2) {
+					clearInterval(animate2);
+					animate2 = null;
+				};
 				animateNumber(newH%10, ox+8, oy);
 			};
 
 			if (Math.trunc(minutes/10) != Math.trunc(newM/10)) {
+				if (animate3) {
+					clearInterval(animate3);
+					animate3 = null;
+				};
 				animateNumber(Math.trunc(newM/10), ox+20, oy);
 			};
-
+			if (animate4) {
+				clearInterval(animate4);
+				animate4 = null;
+			};
 			animateNumber(newM%10, ox+28, oy);
 		};
 
@@ -132,6 +146,7 @@ function clock() {
 		numState = numList[num].slice().reverse();
 
 		timerID = setInterval(frame, speed);
+		
 
 		function frame() {
 
@@ -188,6 +203,8 @@ function clock() {
 			drawNum(num, x0, y0 + oNumY, figDone);
 			frameN++;
 		};
+		return timerID;
+
 	};
 
 	function drawAllFig() {
